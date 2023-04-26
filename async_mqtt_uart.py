@@ -7,6 +7,7 @@ from mqtt_async import MQTTClient, config
 import uasyncio as asyncio
 import time
 from machine import UART
+import my_oled
 import logging
 logging.basicConfig(level=logging.DEBUG)
 
@@ -14,7 +15,7 @@ MAXTX = 4
 
 # Change the following configs to suit your environment
 TOPIC_PUB = 'EGR314/Team321/ABC'
-TOPIC_SUB = 'EGR314/Team321/ABC'
+TOPIC_SUB = 'EGR314/Aukes'
 config.server = 'egr3x4.ddns.net' # can also be a hostname
 config.ssid     = 'photon'
 config.wifi_pw  = 'particle'
@@ -36,6 +37,9 @@ async def receiver():
 
 def callback(topic, msg, retained, qos):
     print('callback',topic, msg, retained, qos)
+    # my_oled.print_data(msg)
+    # my_oled.plot_data(msg)
+    # ^^ Uncomment lines above later
     while (not not msg):
         
         uart.write(msg[:MAXTX])
